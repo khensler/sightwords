@@ -17,6 +17,7 @@
       var incorrect=0;
       var word_url = "/word"
       const Http = new XMLHttpRequest();
+      const Http1 = new XMLHttpRequest();
       function start(){
         word();
         correct=0;
@@ -26,10 +27,12 @@
         document.getElementById("word").innerHTML="Correct: "+correct+" Incorrect: "+incorrect;
       }
       function f_correct(){
+        post(document.getElementById("word").innerHTML,1)
         word();
         correct++;
       }
       function f_incorrect(){
+        post(document.getElementById("word").innerHTML,0)
         word();
         incorrect++;
       }
@@ -43,6 +46,11 @@
           console.log(Http.responseText);
           document.getElementById("word").innerHTML=Http.responseText;
         }
+      }
+      function post(str_word, post_val){
+        post_url ="/report/"+str_word+"/"+post_val
+        Http1.open("GET",post_url)
+        Http1.send()
       }
     </script>
   </head>
