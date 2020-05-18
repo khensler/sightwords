@@ -1,6 +1,7 @@
 from flask import current_app as app
 from flask import render_template, redirect, flash, request
 import random
+import sqlite3
 
 words = ["a",
 "an",
@@ -143,6 +144,11 @@ words = ["a",
 "help",
 "four"
 ]
+
+conn = sqlite3.connect('words.db')
+c = conn.cursor()
+c.execute('''CREATE TABLE if not exists words (word text, correct real, incorrect real)''')
+conn.commit
 
 @app.route('/')
 @app.route('/index')
