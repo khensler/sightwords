@@ -12,8 +12,47 @@
             display: inline-block;
         }
     </style>
+    <script>
+      var correct=0;
+      var incorrect=0;
+      var word_url = "/word"
+      const Http = new XMLHttpRequest();
+      function start(){
+        word();
+        correct=0;
+        incorrect=0;
+      }
+      function end(){
+        document.getElementById("word").innerHTML="Correct: "+correct+" Incorrect: "+incorrect;
+      }
+      function f_correct(){
+        word();
+        correct++;
+      }
+      function f_incorrect(){
+        word();
+        incorrect++;
+      }
+      function word(){
+        Http.open("GET",word_url);
+        Http.send();
+
+      }
+      Http.onreadystatechange=function(){
+        if(this.readyState == 4 & this.status==200){
+          console.log(Http.responseText);
+          document.getElementById("word").innerHTML=Http.responseText;
+        }
+      }
+    </script>
   </head>
-  <body>
-      <a href="/" id="word" class="word"><h1 style="font-size:10vw">{{ word }}</h1></a>
+  <body style="background-color: aqua;" onload="start()">
+      <h1 class="word" style="font-size:10vw;"><div id="word">{{ word }}</div></h1>
+      <div id="score">
+      <div id="correct" style="display: inline-block; background-color: green;" onclick="f_correct()"><h1>Correct</h1></div>&nbsp;&nbsp;&nbsp;<div id="incorrect" style="display: inline-block; background-color: red;" onclick="f_incorrect()"><h1>Incorrect</h1></div>
+      </div>
+      <div id="control">
+      <div id="start" style="display: inline-block;" onclick="start()"><h1>Start</h1></div>&nbsp;&nbsp;&nbsp;&nbsp;<div id="end" style="display: inline-block;" onclick="end()"><h1>End</h1></div>
+    </div>
   </body>
 </html>
