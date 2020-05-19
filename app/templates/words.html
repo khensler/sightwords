@@ -15,7 +15,8 @@
     <script>
       var correct=0;
       var incorrect=0;
-      var word_url = "/word"
+      var word_url = "/word";
+      var hard_word_url = "/word/incorrect"
       const Http = new XMLHttpRequest();
       const Http1 = new XMLHttpRequest();
       function start(){
@@ -39,7 +40,11 @@
         incorrect++;
       }
       function word(){
-        Http.open("GET",word_url);
+        if(correct>incorrect+5){
+          Http.open("GET",hard_word_url)
+        }else{
+          Http.open("GET",word_url);
+        }
         Http.send();
 
       }

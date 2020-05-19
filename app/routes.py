@@ -40,3 +40,14 @@ def report(word, report_val):
      c.execute("update words set correct = ? , incorrect = ? where word = ?",(correct, incorrect, word))
      conn.commit()
      return "ok"
+
+@app.route("/word/incorrect")
+def get_incorrect_words():
+     conn = sqlite3.connect('words.db')
+     c = conn.cursor()
+     c.execute("select word from words where correct <= incorrect order by incorrect ASC limit 5")
+     rows = c.fetchall()
+     words = []
+     for row in rows:
+          words.append(row[0])
+     return random.choice(words)
