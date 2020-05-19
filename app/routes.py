@@ -12,16 +12,17 @@ def index():
 def word():
      conn = sqlite3.connect('words.db')
      c = conn.cursor()
-     c.execute("select word from words where correct <= incorrect limit 5")
+     c.execute("select word from words where correct <= incorrect order by incorrect ASC limit 5")
      rows = c.fetchall()
      words = []
      for row in rows:
           words.append(row[0])
-     c.execute("select word from words where correct >= incorrect limit 5")
+     c.execute("select word from words where correct >= incorrect order by correct ASC limit 5")
      rows = c.fetchall()
      words = []
      for row in rows:
           words.append(row[0])
+          print(row[0])
      return random.choice(words)
 
 @app.route("/report/<word>/<report_val>")
