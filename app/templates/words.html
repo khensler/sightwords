@@ -27,11 +27,13 @@
         document.getElementById("word").innerHTML="Correct: "+correct+" Incorrect: "+incorrect;
       }
       function f_correct(){
+        sayword();
         post(document.getElementById("word").innerHTML,1)
         word();
         correct++;
       }
       function f_incorrect(){
+        sayword();
         post(document.getElementById("word").innerHTML,0)
         word();
         incorrect++;
@@ -52,9 +54,53 @@
         Http1.open("GET",post_url)
         Http1.send()
       }
+
+     // if(window.speechSynthesis.getVoices().length == 0) {
+	   //   window.speechSynthesis.addEventListener('voiceschanged', function() {
+		 //   sayword();
+	   //   });
+     // }
+     // else {
+	      // languages list available, no need to wait
+	   //   sayword()
+     // }
+
+      function sayword() {
+	      // get all voices that browser offers
+	      var available_voices = window.speechSynthesis.getVoices();
+
+	      // this will hold an english voice
+	      var english_voice = '';
+
+	      // find voice by language locale "en-US"
+	      // if not then select the first voice
+	      for(var i=0; i<available_voices.length; i++) {
+		      if(available_voices[i].lang === 'en-US') {
+			      english_voice = available_voices[i];
+			      break;
+		      }
+	      }
+	      if(english_voice === '')
+		      english_voice = available_voices[0];
+
+	      // new SpeechSynthesisUtterance object
+	      var utter = new SpeechSynthesisUtterance();
+	      utter.rate = 1;
+	      utter.pitch = 0.5;
+	      utter.text = document.getElementById("word").innerHTML;
+	      utter.voice = english_voice;
+
+	      // event after text has been spoken
+	      utter.onend = function() {
+          //word();
+	      }
+
+	      // speak
+	      window.speechSynthesis.speak(utter);
+      }
     </script>
   </head>
-  <body style="background-color: aqua;" onload="start()">
+  <body style="background-color: aqua;" onload="window.speechSynthesis.getVoices();start()">
       <h1 class="word" style="font-size:10vw;"><div id="word">{{ word }}</div></h1>
       <div id="score">
       <div id="correct" style="display: inline-block; background-color: green;" onclick="f_correct()"><h1>Correct</h1></div>&nbsp;&nbsp;&nbsp;<div id="incorrect" style="display: inline-block; background-color: red;" onclick="f_incorrect()"><h1>Incorrect</h1></div>
