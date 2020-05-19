@@ -55,17 +55,9 @@
         Http1.send()
       }
 
-     // if(window.speechSynthesis.getVoices().length == 0) {
-	   //   window.speechSynthesis.addEventListener('voiceschanged', function() {
-		 //   sayword();
-	   //   });
-     // }
-     // else {
-	      // languages list available, no need to wait
-	   //   sayword()
-     // }
 
       function sayword() {
+        //from https://usefulangle.com/post/98/javascript-text-to-speech
 	      // get all voices that browser offers
 	      var available_voices = window.speechSynthesis.getVoices();
 
