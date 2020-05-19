@@ -1,6 +1,8 @@
-FROM python:3.7
-RUN apt install git
+FROM python
+RUN mkdir /App
+WORKDIR /App
 RUN git clone https://github.com/khensler/sightwords
-RUN pip install --no-cache-dir -r requirements
+WORKDIR /App/sightwords
+RUN pip install --no-cache-dir -r requirements.txt
 ENTRYPOINT ["python"]
-CMD ['main.py']
+CMD ["main.py"]
