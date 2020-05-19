@@ -146,10 +146,12 @@ words = ["a",
 "four"
 ]
 
-#for word in words:
-#    c.execute("INSERT INTO words VALUES(?,?,?)",(word,0,0))
+for word in words:
+    c.execute("INSERT INTO words VALUES(?,?,?)",(word,0,0))
+
 c.execute("select * from words")
 rows = c.fetchall()
 for row in rows:
     print(row)
-#conn.commit()
+
+conn.commit()
