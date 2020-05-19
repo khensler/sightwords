@@ -2,6 +2,11 @@ from flask import current_app as app
 from flask import render_template, redirect, flash, request
 import random
 import sqlite3
+import os
+
+dbpath = os.environ.get('DB_PATH')
+if dbpath is None:
+    dbpath = "words.db"
 
 @app.route('/')
 @app.route('/index')
@@ -10,7 +15,7 @@ def index():
 
 @app.route('/word')
 def word():
-     conn = sqlite3.connect('words.db')
+     conn = sqlite3.connect(dbpath)
      c = conn.cursor()
      c.execute("select word from words where correct <= incorrect order by incorrect ASC limit 5")
      rows = c.fetchall()
@@ -27,7 +32,7 @@ def word():
 
 @app.route("/report/<word>/<report_val>")
 def report(word, report_val):
-     conn = sqlite3.connect('words.db')
+     conn = sqlite3.connect(dbpath)
      c = conn.cursor()
      c.execute('''select correct, incorrect from words where word = ?''', [word])
      row = c.fetchone()
