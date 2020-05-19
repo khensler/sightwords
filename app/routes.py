@@ -50,7 +50,7 @@ def report(word, report_val):
 def get_incorrect_words():
      conn = sqlite3.connect('words.db')
      c = conn.cursor()
-     c.execute("select word from words where correct <= incorrect order by incorrect DESC limit 5")
+     c.execute("select word from words correct ASC limit 10")
      rows = c.fetchall()
      words = []
      for row in rows:
