@@ -77,14 +77,14 @@ def get_results():
                     'word' : row[0],
                     'correct' : row[1],
                     'incorrect' : row[2],
-                    'percentage' : '100'
+                    'percentage' : 100
                }
           else:
                word_dict = {
                     'word' : row[0],
                     'correct' : row[1],
                     'incorrect' : row[2],
-                    'percentage' : '0'
+                    'percentage' : 0
                }
           print(word_dict)
           words.append(word_dict.copy())
