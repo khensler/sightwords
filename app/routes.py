@@ -72,6 +72,13 @@ def get_results():
                     'incorrect' : row[2],
                     'percentage' : round(100*(row[1]/(row[1]+row[2])),0)
                }
+          elif row[1]>0 and row[2]==0:
+               word_dict = {
+                    'word' : row[0],
+                    'correct' : row[1],
+                    'incorrect' : row[2],
+                    'percentage' : '100'
+               }
           else:
                word_dict = {
                     'word' : row[0],
