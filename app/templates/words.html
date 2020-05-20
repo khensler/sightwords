@@ -46,12 +46,16 @@
           Http.open("GET",word_url);
         }
         Http.send();
-
+        
       }
       Http.onreadystatechange=function(){
         if(this.readyState == 4 & this.status==200){
           console.log(Http.responseText);
-          document.getElementById("word").innerHTML=Http.responseText;
+          if(Http.responseText==document.getElementById("word")){
+            word()
+          }else{
+            document.getElementById("word").innerHTML=Http.responseText;
+          }
         }
       }
       function post(str_word, post_val){
