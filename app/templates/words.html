@@ -52,7 +52,7 @@
         if(this.readyState == 4 & this.status==200){
           console.log(Http.responseText);
           if(Http.responseText==document.getElementById("word")){
-            word()
+            word();
           }else{
             document.getElementById("word").innerHTML=Http.responseText;
           }
