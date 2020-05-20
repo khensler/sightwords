@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+    <body style="background-color: aqua;">
+        <table style="border:2px">
+            <tr><th style="border: 2px">Word</th><th style="border: 4px">Correct&nbsp;</th><th style="border: 4px">Incorrect&nbsp;</th><th style="border: 4px">Percentage</th></tr>
+            {% for word in words %}
+                <tr><td>{{ word.word }}</td><td>{{ word.correct }}</td><td>{{ word.incorrect }}</td><td>{{ word.percentage }}</td></tr>
+            {% endfor %}
+        </table>
+    </body>

@@ -56,3 +56,29 @@ def get_incorrect_words():
      for row in rows:
           words.append(row[0])
      return random.choice(words)
+
+@app.route("/results")
+def get_results():
+     conn = sqlite3.connect('words.db')
+     c = conn.cursor()
+     c.execute("select word, correct, incorrect from words order by correct DESC")
+     rows = c.fetchall()
+     words = []
+     for row in rows:
+          if row[2]>0 and row[1] > 0:
+               word_dict = {
+                    'word' : row[0],
+                    'correct' : row[1],
+                    'incorrect' : row[2],
+                    'percentage' : round(100*(row[1]/(row[1]+row[2])),0)
+               }
+          else:
+               word_dict = {
+                    'word' : row[0],
+                    'correct' : row[1],
+                    'incorrect' : row[2],
+                    'percentage' : '0'
+               }
+          print(word_dict)
+          words.append(word_dict.copy())
+     return render_template("results.html", words=words)
