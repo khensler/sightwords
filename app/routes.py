@@ -7,6 +7,7 @@ import os
 dbpath = os.environ.get('DB_PATH')
 if dbpath is None:
     dbpath = "words.db"
+print("Using DB Path: {}".format(dbpath))
 
 @app.route('/')
 @app.route('/index')
