@@ -12,18 +12,35 @@ print("Using DB Path: {}".format(dbpath))
 @app.route('/')
 @app.route('/index')
 def index():
-     return render_template('words.html',word='Welcome')
-
-@app.route('/word')
-def word():
      conn = sqlite3.connect(dbpath)
      c = conn.cursor()
-     c.execute("select word from words where correct <= incorrect order by incorrect ASC limit 5")
+     c.execute("select tile_name,id from tiles")
+     rows = c.fetchall()
+     tiles = []
+     for row in rows:
+          tiles.append(row[0])
+     return render_template('index.html',tiles=tiles)
+     #return render_template('words.html',word='Welcome')
+
+@app.route('/card/<kind>')
+def show_card(kind):
+     conn = sqlite3.connect(dbpath)
+     c = conn.cursor()
+     c.execute("select id from tiles where tile_name = (?)",(kind,))
+     row = c.fetchone()
+     tile_id = row[0]
+     return render_template('words.html',word='Welcome',tile_id=tile_id)
+
+@app.route('/word/<kind>')
+def word(kind):
+     conn = sqlite3.connect(dbpath)
+     c = conn.cursor()
+     c.execute("select word from words where tile_id = (?) AND correct <= incorrect order by incorrect ASC limit 5",(kind,))
      rows = c.fetchall()
      words = []
      for row in rows:
           words.append(row[0])
-     c.execute("select word from words where correct >= incorrect order by correct ASC limit 5")
+     c.execute("select word from words where tile_id = (?) AND correct >= incorrect order by correct ASC limit 5",(kind,))
      rows = c.fetchall()
      words = []
      for row in rows:
@@ -47,11 +64,11 @@ def report(word, report_val):
      conn.commit()
      return "ok"
 
-@app.route("/word/incorrect")
-def get_incorrect_words():
+@app.route("/word/incorrect/<kind>")
+def get_incorrect_words(kind):
      conn = sqlite3.connect('words.db')
      c = conn.cursor()
-     c.execute("select word from words correct order by correct ASC limit 10")
+     c.execute("select word from words where tile_id = (?) order by correct ASC limit 10",(kind,))
      rows = c.fetchall()
      words = []
      for row in rows:

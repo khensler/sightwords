@@ -15,8 +15,10 @@
     <script>
       var correct=0;
       var incorrect=0;
-      var word_url = "/word";
-      var hard_word_url = "/word/incorrect"
+      var tile_id = {{ tile_id }};
+      var word_url = "/word/"+tile_id;
+      var hard_word_url = "/word/incorrect/"+tile_id;
+
       const Http = new XMLHttpRequest();
       const Http1 = new XMLHttpRequest();
       function start(){

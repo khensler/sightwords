@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .word {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+        }
+    </style>
+    <script>
+      
+    </script>
+  </head>
+  <body style="background-color: aqua;" onload="window.speechSynthesis.getVoices();start()">
+      <div>
+        {% for tile in tiles %}
+          <div style="display:inline-block; border-style: solid; border-radius: 5px;" onclick='location.href="/card/{{ tile }}"'><h1>{{ tile }}</h1></div>
+        {% endfor %}
+      </div>
+    <a href = "/results">Report Card</a>
+  </body>
+</html>
