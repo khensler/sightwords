@@ -66,7 +66,7 @@ def report(word, report_val):
 
 @app.route("/word/incorrect/<kind>")
 def get_incorrect_words(kind):
-     conn = sqlite3.connect('words.db')
+     conn = sqlite3.connect(dbpath)
      c = conn.cursor()
      c.execute("select word from words where tile_id = (?) order by correct ASC limit 10",(kind,))
      rows = c.fetchall()
@@ -77,7 +77,7 @@ def get_incorrect_words(kind):
 
 @app.route("/results")
 def get_results():
-     conn = sqlite3.connect('words.db')
+     conn = sqlite3.connect(dbpath)
      c = conn.cursor()
      c.execute("select word, correct, incorrect from words order by correct DESC")
      rows = c.fetchall()
